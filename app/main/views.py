@@ -1,5 +1,5 @@
 from . import main
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 @main.route('/')
@@ -22,6 +22,10 @@ def contact():
 def new():
     return render_template('new_post.html')
 
-@main.route('/add')
+@main.route('/add', methods=['POST'])
 def add():
-    return ''
+    title = request.form['title']
+    subtitle = request.form['subtitle']
+    author = request.form['author']
+    content = request.form['content']
+    return '<h1>Title: {} Subtitle: {} Author: {} Content: {}</h1>'.format(title, subtitle, author, content)
