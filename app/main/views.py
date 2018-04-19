@@ -7,15 +7,21 @@ from .. import db
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+
+    posts = Post.query.all()
+
+    return render_template('index.html', posts = posts)
 
 @main.route('/about')
 def about():
     return render_template('about.html')
 
-@main.route('/post')
-def post():
-    return render_template('post.html')
+@main.route('/post/<int:post_id>')
+def post(post_id):
+
+
+    post = Post.query.filter_by(id=post_id).one()
+    return render_template('post.html', post = post)
 
 @main.route('/contact')
 def contact():
