@@ -17,3 +17,11 @@ def post():
 @main.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@main.route('/new')
+def new():
+    return render_template('new_post.html')
+
+@main.route('/new')
+def new():
+    return render_template('new_post.html')
