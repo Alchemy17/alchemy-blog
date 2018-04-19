@@ -1,5 +1,8 @@
 from . import main
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
+from ..models import Post
+from datetime import datetime
+from .. import db
 
 
 @main.route('/')
@@ -24,8 +27,15 @@ def new():
 
 @main.route('/add', methods=['POST'])
 def add():
+
     title = request.form['title']
     subtitle = request.form['subtitle']
     author = request.form['author']
     content = request.form['content']
-    return '<h1>Title: {} Subtitle: {} Author: {} Content: {}</h1>'.format(title, subtitle, author, content)
+    
+    post = Post(title = title, subtitle = subtitle, author = author, content = content, date_posted = datetime.now())
+    
+    db.session.add(post)
+    db.session.commit()
+    return redirect(url_for('main.index'))
+    
