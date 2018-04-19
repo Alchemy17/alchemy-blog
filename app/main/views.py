@@ -22,6 +22,6 @@ def contact():
 def new():
     return render_template('new_post.html')
 
-@main.route('/new')
-def new():
-    return render_template('new_post.html')
+@main.route('/add')
+def add():
+    return ''
