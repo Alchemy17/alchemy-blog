@@ -1,5 +1,5 @@
 class Config:
-    pass
+    SECRET_KEY = 'laziness'
 
 class ProdConfig(Config):
     pass
