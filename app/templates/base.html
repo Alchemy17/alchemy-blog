@@ -43,22 +43,26 @@
                     <a class="nav-link" href="{{url_for('main.contact')}}">Contact</a>
                   </li>
                   {% if current_user.is_authenticated %}
-                      <li class="nav-item">
-                    {{current_user.username}}
+                  <li class="nav-item">
+                      <a class="nav-link" style="color: black;" href="{{url_for('main.contact')}}">{{current_user.username}}</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{url_for('auth.logout')}}">Sign Out</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('auth.logout')}}">Sign In</a>
+                        <a class="nav-link" href="/authenticate/login">Sign In</a>
                     </li>
                     {% endif%}
                     {% if current_user.is_admin %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('main.new')}}">New Post</a>
                       </li>
+                      <li class="nav-item">
+                          <a class="nav-link " href="/admin">Admin View</a>
+                        </li>
                     {%endif%}
+
                 </ul>
               </div>
             </div>

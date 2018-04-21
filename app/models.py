@@ -2,7 +2,7 @@ from . import db, admin, login_manager
 from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 
 
 @login_manager.user_loader
@@ -19,8 +19,6 @@ class Post(db.Model):
     author = db.Column(db.String(20))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     content = db.Column(db.Text)
-
-admin.add_view(ModelView(Post, db.session))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -45,5 +43,14 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+    
 
-admin.add_view(ModelView(User, db.session))
+class MyModelView(ModelView):
+    def is_accessible(self):
+        if current_user.is_authenticated and current_user.is_admin:
+            return True
+        else:
+            return False
+
+admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Post, db.session))
