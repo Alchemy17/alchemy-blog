@@ -99,9 +99,24 @@
         </form>
 
           <!-- Comment with nested comments -->
-
-{{post.comment.reply.author}} haha
-
+          {%for comment in post.comments%}
+          <form method="POST" action="{{ url_for('main.reply') }}">
+          <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">{{comment.author}}</h5>
+              {{post.comment.comment}}
+              <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0">{{post.comment.reply.author}}</h5>
+                  {{post.comment.reply.reply}}
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+        {%endfor%}
 
     <!-- Footer -->
     <footer>
