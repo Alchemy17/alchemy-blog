@@ -83,6 +83,26 @@
 
     <hr>
 
+          <!-- Comments Form -->
+          <form method="POST" action="{{ url_for('main.comment') }}">
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </form>
+
+          <!-- Comment with nested comments -->
+
+{{post.comment.reply.author}} haha
+
+
     <!-- Footer -->
     <footer>
       <div class="container">
