@@ -1,6 +1,7 @@
 from . import main
 from flask import Flask, render_template, request, redirect, url_for
-from ..models import Post, Comment, Reply
+from ..models import Post, Comment
+from .forms import CommentForm
 from datetime import datetime
 from .. import db
 from flask_login import login_required
@@ -20,8 +21,18 @@ def about():
 @main.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
 
-    post = Post.query.filter_by(id=post_id).one()
-    return render_template('post.html', post = post)
+    commentform = CommentForm()
+    
+    if commentform.validate_on_submit():
+        author = commentform.author.data
+        comment = commentform.comment.data
+        comment = Comment(author=author, comment=comment,post_id = post_id)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('.post',post_id = post_id))
+    post = Post.query.get(post_id)
+    comments = Comment.query.filter_by(post_id= post_id).all()
+    return render_template('post.html', commentform=commentform, post=post, comments = comments)
 
 @main.route('/contact')
 def contact():
@@ -44,27 +55,4 @@ def add():
     db.session.add(post)
     db.session.commit()
     return redirect(url_for('main.index'))
-
-@main.route('/comment', methods=['POST'])
-def comment():
-
-    comment = request.form['comment']
-    comment = Comment(comment = comment, date_posted = datetime.now())
-
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('main.index'))
-
-@main.route('/reply', methods=['POST'])
-def reply():
-
-
-    reply = request.form['content']
-    post = Post.query.all()
-    
-    reply = Reply(reply = reply, date_posted = datetime.now())
-    
-    db.session.add(reply)
-    db.session.commit()
-    return redirect(url_for('main.post', post_id = post.id))
     

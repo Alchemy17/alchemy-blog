@@ -19,7 +19,8 @@ class Post(db.Model):
     author = db.Column(db.String(20))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     content = db.Column(db.Text)
-    comment_id = db.Column(db.Integer,db.ForeignKey('comment.id'))
+    comments = db.relationship('Comment',backref = 'comments',lazy="dynamic")
+
 
 class Comment(db.Model):
 
@@ -29,19 +30,7 @@ class Comment(db.Model):
     author = db.Column(db.String(20))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     comment = db.Column(db.Text)
-    comments = db.relationship('Post',backref = 'comment',lazy="dynamic")
-    reply_id = db.Column(db.Integer,db.ForeignKey('reply.id'))
-
-
-class Reply(db.Model):
-
-    __tablename__ = 'reply'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.String(20))
-    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
-    reply = db.Column(db.Text)
-    comments = db.relationship('Comment',backref = 'reply',lazy="dynamic")
+    post_id = db.Column(db.Integer,db.ForeignKey('post.id'))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -78,4 +67,3 @@ class MyModelView(ModelView):
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(MyModelView(Post, db.session))
 admin.add_view(MyModelView(Comment, db.session))
-admin.add_view(MyModelView(Reply, db.session))
