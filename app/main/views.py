@@ -10,9 +10,9 @@ from flask_login import login_required
 @main.route('/')
 def index():
 
-    posts = Post.query.order_by(Post.date_posted.desc()). all()
+    post = Post.query.order_by(Post.date_posted.desc()). all()
 
-    return render_template('index.html', posts = posts)
+    return render_template('index.html', post = post)
 
 @main.route('/about')
 def about():
