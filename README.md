@@ -37,7 +37,7 @@ The following are needed for the application to run on a local computer:
 * Switch to the virtual environment by entering  ```source virtual/bin/activate``` from the terminal.
 * To run the app, type ```./start.sh``` from your virtual environment on the terminal. It will give you a local host link that will open the app on a website. 
 * Once inside the application, a user will only be able to view the blogs posted and comment on them.
-* To post a blog as a writer, login to the application from the drop down menu at the top right of the page. The default email address is ```admin@example.com``` and default password is ```abc123```.
+* To post a blog as a writer, login to the application from the drop down menu at the top right of the page. The default email address is ```admin@example.com``` and default password is ```admin1234```.
 * This will then grant the admin access to read/write/edit/delete any blog post/comments by accessing the admin tab that'll direct him/her to the admin rights page.
 
 
